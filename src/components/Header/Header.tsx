@@ -4,8 +4,11 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Badge } from '@mui/material';
 import { ShoppingCart, Favorite } from '@mui/icons-material';
 
+import { useAtom } from 'jotai';
+import { cartAtom } from '@/store/cart';
 
 const Header = () => {
+    const [cart] = useAtom(cartAtom);
     return (
         <AppBar position="static">
             <Toolbar>
@@ -13,7 +16,7 @@ const Header = () => {
                     My Store
                 </Typography>
                 <IconButton color="inherit">
-                    <Badge badgeContent={0} color="secondary">
+                    <Badge badgeContent={cart} color="secondary">
                         <ShoppingCart />
                     </Badge>
                 </IconButton>
