@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText, Button, Avatar } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
 import { useAtom } from 'jotai';
@@ -40,12 +40,16 @@ const Header = () => {
                 <Modal open={open} onClose={handleClose}>
                     <Box className="cartModal">
                         <Typography variant="h6" component="h2" gutterBottom>
-                            Cart Items
+                            Cart items
                         </Typography>
                         <List>
                             {cart.map((item, index) => (
-                                <ListItem key={index}>
-                                    <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity}`} />
+                                <ListItem key={index} className="cartItemList">
+                                    <Avatar>
+                                        <img src={item.image} alt={item.name} />
+                                    </Avatar>
+                                    <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} - Total: $${item.price * item.quantity}`} />
+
                                 </ListItem>
                             ))}
                         </List>
