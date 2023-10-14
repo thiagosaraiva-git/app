@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 export default function Home() {
   return (
     <>
-      <Grid container spacing={2} xs={12} alignItems='center' justifyContent='center'>
+      <Grid container spacing={2} alignItems='center' justifyContent='center'>
         <CardItem name={'test'} image={'test'} price={100} />
         <CardItem name={'test2'} image={'test2'} price={150} />
         <CardItem name={'test3'} image={'test3'} price={99} />

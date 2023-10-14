@@ -27,8 +27,8 @@ const Header = () => {
                 <Typography variant="h6" style={{ flexGrow: 1 }}>
                     My Store
                 </Typography>
-                <IconButton color="inherit">
-                    <Badge badgeContent={cart.length} color="secondary" onClick={handleCart}>
+                <IconButton color="inherit" onClick={handleCart}>
+                    <Badge badgeContent={cart.length} color="secondary">
                         <ShoppingCart />
                     </Badge>
                 </IconButton>
