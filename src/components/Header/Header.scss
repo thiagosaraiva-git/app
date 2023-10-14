@@ -11,6 +11,15 @@
         margin-right: 15px;
     }
 
+    .cartItemDelete {
+        margin-left: 15px;
+    }
+
+    .cartButtonContainer {
+        display: inline-flex;
+        justify-content: flex-end;
+    }
+
     Button {
         &:first-of-type {
             margin-right: 5px;

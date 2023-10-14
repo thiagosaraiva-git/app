@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+'use client'
 import {
   Card,
   CardMedia,
@@ -23,11 +21,9 @@ interface CardItemProps {
 }
 
 const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
-  const [quantity, setQuantity] = useState(0);
   const [cart, setCart] = useAtom(cartAtom);
 
   const handleAdd = () => {
-    setQuantity(quantity + 1);
     const itemIndex = cart.findIndex((item) => item.name === name);
 
     if (itemIndex !== -1) {
@@ -48,10 +44,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
   };
 
   const handleRemove = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-      const itemIndex = cart.findIndex((item) => item.name === name);
-
+    const itemIndex = cart.findIndex((item) => item.name === name);
       if (itemIndex !== -1) {
         if (cart[itemIndex].quantity > 1) {
           const updatedCart = [...cart];
@@ -63,8 +56,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
           setCart(updatedCart);
         }
       }
-    }
-  };
+    };
 
   return (
     <Grid item>
@@ -75,7 +67,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
             {name}, ${price}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Quantity: {quantity}
+            Quantity: {cart.find((item) => item.name === name)?.quantity || 0}
           </Typography>
           <Grid
             container
@@ -89,7 +81,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
             <IconButton
               aria-label="add"
               onClick={handleRemove}
-              disabled={!quantity}
+              disabled={!cart.find((item) => item.name === name)?.quantity}
             >
               <RemoveIcon />
             </IconButton>

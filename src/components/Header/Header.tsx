@@ -1,78 +1,131 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText, Button, Avatar } from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
+import React, { useState, useEffect } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Badge,
+  Modal,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  Avatar,
+  Grid,
+} from "@mui/material";
+import { ShoppingCart, Delete } from "@mui/icons-material";
 
-import { useAtom } from 'jotai';
-import { cartAtom } from '@/store/cart';
+import { useAtom } from "jotai";
+import { cartAtom } from "@/store/cart";
 
-import './Header.scss'
+import "./Header.scss";
 
 const Header = () => {
-    const [cart] = useAtom(cartAtom);
-    const [open, setOpen] = useState(false);
-    const [total, setTotal] = useState(0);
+  const [cart, setCart] = useAtom(cartAtom);
+  const [open, setOpen] = useState(false);
+  const [total, setTotal] = useState(0);
 
-    const handleCart = () => {
-        setOpen(true);
-    };
+  const handleCart = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleCheckout = () => {
-        // Redirect the user to the checkout page
-        window.location.href = '/checkout';
-    };
+  const handleDelete = (index: number) => {
+    const updatedCart = [...cart];
+    updatedCart.splice(index, 1);
+    setCart(updatedCart);
+  };
 
-    useEffect(() => {
-        let sum = 0;
-        cart.forEach(item => {
-            sum += item.price * item.quantity;
-        });
-        setTotal(sum);
-    }, [cart]);
+  const handleCheckout = () => {
+    // Redirect the user to the checkout page
+    window.location.href = "/checkout";
+  };
 
-    return (
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" style={{ flexGrow: 1 }}>
-                    My Store
-                </Typography>
-                <IconButton color="inherit" onClick={handleCart} disabled={!cart.length}>
-                    <Badge badgeContent={cart.length} color="secondary">
-                        <ShoppingCart />
-                    </Badge>
-                </IconButton>
-                <Modal open={open} onClose={handleClose}>
-                    <Box className="cartModal">
-                        <Typography variant="h6" component="h2" gutterBottom>
-                            Cart items
-                        </Typography>
-                        <List>
-                            {cart.map((item, index) => (
-                                <ListItem key={index} className="cartItemList">
-                                    <Avatar>
-                                        <img src={item.image} alt={item.name} />
-                                    </Avatar>
-                                    <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} - Total: $${item.price * item.quantity}`} />
-                                </ListItem>
-                            ))}
-                        </List>
-                        <Typography variant="body1" color="initial" className="cartTotalValue">Total: ${total}</Typography>
-                        <Button variant="contained" color="error" onClick={handleClose}>
-                            Keep buying
-                        </Button>
-                        <Button variant="contained" color="primary" onClick={handleCheckout}>
-                            Checkout
-                        </Button>
-                    </Box>
-                </Modal>
-            </Toolbar>
-        </AppBar>
-    );
+  useEffect(() => {
+    let sum = 0;
+    cart.forEach((item) => {
+      sum += item.price * item.quantity;
+    });
+    setTotal(sum);
+    if (!cart.length) {
+      setOpen(false);
+    }
+  }, [cart]);
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          My Store
+        </Typography>
+        <IconButton
+          color="inherit"
+          onClick={handleCart}
+          disabled={!cart.length}
+        >
+          <Badge badgeContent={cart.length} color="secondary">
+            <ShoppingCart />
+          </Badge>
+        </IconButton>
+        <Modal open={open} onClose={handleClose}>
+          <Box className="cartModal">
+            <Typography variant="h6" component="h2" gutterBottom>
+              Cart items
+            </Typography>
+            <List>
+              {cart.map((item, index) => (
+                <>
+                  <ListItem key={index} className="cartItemList">
+                    <Avatar>
+                      <img src={item.image} alt={item.name} />
+                    </Avatar>
+                    <ListItemText
+                      primary={item.name}
+                      secondary={`Quantity: ${item.quantity} - Total: $${
+                        item.price * item.quantity
+                      }`}
+                    />
+                    <IconButton
+                      color="inherit"
+                      onClick={() => handleDelete(index)}
+                      className="cartItemDelete"
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItem>
+                </>
+              ))}
+            </List>
+            <Typography
+              variant="body1"
+              color="initial"
+              className="cartTotalValue"
+            >
+              Total: ${total}
+            </Typography>
+            <Grid container className="cartButtonContainer">
+              <Button variant="contained" color="error" onClick={handleClose}>
+                Keep buying
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCheckout}
+              >
+                Checkout
+              </Button>
+            </Grid>
+          </Box>
+        </Modal>
+      </Toolbar>
+    </AppBar>
+  );
 };
 
 export default Header;
