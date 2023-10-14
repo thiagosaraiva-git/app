@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText, Button } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
 import { useAtom } from 'jotai';
@@ -21,13 +21,18 @@ const Header = () => {
         setOpen(false);
     };
 
+    const handleCheckout = () => {
+        // Redirect the user to the checkout page
+        window.location.href = '/checkout';
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1 }}>
                     My Store
                 </Typography>
-                <IconButton color="inherit" onClick={handleCart}>
+                <IconButton color="inherit" onClick={handleCart} disabled={!cart.length}>
                     <Badge badgeContent={cart.length} color="secondary">
                         <ShoppingCart />
                     </Badge>
@@ -44,6 +49,12 @@ const Header = () => {
                                 </ListItem>
                             ))}
                         </List>
+                        <Button variant="contained" color="error" onClick={handleClose}>
+                            Keep buying
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={handleCheckout}>
+                            Checkout
+                        </Button>
                     </Box>
                 </Modal>
             </Toolbar>
