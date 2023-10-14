@@ -16,7 +16,7 @@ const Header = () => {
                     My Store
                 </Typography>
                 <IconButton color="inherit">
-                    <Badge badgeContent={cart} color="secondary">
+                    <Badge badgeContent={cart.length} color="secondary">
                         <ShoppingCart />
                     </Badge>
                 </IconButton>

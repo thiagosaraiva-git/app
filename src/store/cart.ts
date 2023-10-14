@@ -1,5 +1,12 @@
 import { atom } from "jotai";
 
-const cartAtom = atom(0);
+type State = {
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+};
+
+const cartAtom = atom<State[]>([]);
 
 export { cartAtom };
