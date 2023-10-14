@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Badge, Modal, Box, List, ListItem, ListItemText, Button, Avatar } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
@@ -12,6 +12,7 @@ import './Header.scss'
 const Header = () => {
     const [cart] = useAtom(cartAtom);
     const [open, setOpen] = useState(false);
+    const [total, setTotal] = useState(0);
 
     const handleCart = () => {
         setOpen(true);
@@ -25,6 +26,14 @@ const Header = () => {
         // Redirect the user to the checkout page
         window.location.href = '/checkout';
     };
+
+    useEffect(() => {
+        let sum = 0;
+        cart.forEach(item => {
+            sum += item.price * item.quantity;
+        });
+        setTotal(sum);
+    }, [cart]);
 
     return (
         <AppBar position="static">
@@ -49,10 +58,10 @@ const Header = () => {
                                         <img src={item.image} alt={item.name} />
                                     </Avatar>
                                     <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} - Total: $${item.price * item.quantity}`} />
-
                                 </ListItem>
                             ))}
                         </List>
+                        <Typography variant="body1" color="initial" className="cartTotalValue">Total: ${total}</Typography>
                         <Button variant="contained" color="error" onClick={handleClose}>
                             Keep buying
                         </Button>
