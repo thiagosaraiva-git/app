@@ -64,7 +64,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
         <CardMedia component="img" height="140" image={image} alt={name} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {name}, ${price}
+            {name}, ${price.toFixed(2)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Quantity: {cart.find((item) => item.name === name)?.quantity || 0}

@@ -5,7 +5,8 @@
     transform: translate(-50%, -50%);
     border-radius: 4px;
     padding: 1em;
-    background-color: white;  
+    background-color: white;
+    max-height: 30em; 
     
     .MuiAvatar-root {
         margin-right: 15px;
@@ -26,6 +27,11 @@
         }
     }
 
+    .cartItemContainer {
+        overflow: auto;
+        max-height: 20em;
+    }
+
     .cartItemList {
         background-color: #eeeeee;
         padding: 1em;
@@ -34,7 +40,7 @@
     }
 
     .cartTotalValue {
-        margin-bottom: 1em;
+        margin: 1em 0;
         display: flex;
         justify-content: flex-end;
     }

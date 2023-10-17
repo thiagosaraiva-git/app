@@ -62,7 +62,7 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          My Store
+          Shoes Store
         </Typography>
         <IconButton
           color="inherit"
@@ -78,17 +78,17 @@ const Header = () => {
             <Typography variant="h6" component="h2" gutterBottom>
               Cart items
             </Typography>
-            <List>
+            <List className="cartItemContainer">
               {cart.map((item, index) => (
-                <>
-                  <ListItem key={index} className="cartItemList">
+                <div key={index}>
+                  <ListItem className="cartItemList">
                     <Avatar>
                       <img src={item.image} alt={item.name} />
                     </Avatar>
                     <ListItemText
                       primary={item.name}
                       secondary={`Quantity: ${item.quantity} - Total: $${
-                        item.price * item.quantity
+                        (item.price * item.quantity).toFixed(2)
                       }`}
                     />
                     <IconButton
@@ -99,7 +99,7 @@ const Header = () => {
                       <Delete />
                     </IconButton>
                   </ListItem>
-                </>
+                </div>
               ))}
             </List>
             <Typography
@@ -107,7 +107,7 @@ const Header = () => {
               color="initial"
               className="cartTotalValue"
             >
-              Total: ${total}
+              Total: ${total.toFixed(2)}
             </Typography>
             <Grid container className="cartButtonContainer">
               <Button variant="contained" color="error" onClick={handleClose}>
