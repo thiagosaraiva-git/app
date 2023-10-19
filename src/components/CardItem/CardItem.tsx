@@ -72,7 +72,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
             Price: ${price}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Quantity in the cart: {cart.find((item) => item.name === name)?.quantity || 0}
+            Quantity: {cart.find((item) => item.name === name)?.quantity || 0}
           </Typography>
           <Grid
             container
