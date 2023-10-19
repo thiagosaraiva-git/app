@@ -17,7 +17,8 @@ export default function Home() {
   
   async function getShoes() {
     try {
-      let res = await axios.get('http://localhost:2540/shoes')
+      // let res = await axios.get('http://localhost:2540/shoes') // local
+      let res = await axios.get('https://backend-shoes-store.onrender.com/shoes') // production
       setShoes(res.data)
     } catch (error) {
       console.error('Error: ' + error)
