@@ -59,10 +59,10 @@ const Header = () => {
   }, [cart]);
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Shoes Store
+          Nike Store
         </Typography>
         <IconButton
           color="inherit"

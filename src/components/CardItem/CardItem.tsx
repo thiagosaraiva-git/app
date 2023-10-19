@@ -16,11 +16,12 @@ import { cartAtom } from "@/store/cart";
 
 interface CardItemProps {
   name: string;
+  brand: string;
   image: string;
   price: number;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
+const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
   const [cart, setCart] = useAtom(cartAtom);
 
   const handleAdd = () => {
@@ -35,6 +36,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
         ...cart,
         {
           name: name,
+          brand: brand,
           price: price,
           image: image,
           quantity: 1,
@@ -63,11 +65,14 @@ const CardItem: React.FC<CardItemProps> = ({ name, image, price }) => {
       <Card className="cardContainer">
         <CardMedia component="img" height="140" image={image} alt={name} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}, ${price.toFixed(2)}
+          <Typography gutterBottom variant="h5" component="div" noWrap>
+            {brand} {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Quantity: {cart.find((item) => item.name === name)?.quantity || 0}
+            Price: ${price}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Quantity in the cart: {cart.find((item) => item.name === name)?.quantity || 0}
           </Typography>
           <Grid
             container

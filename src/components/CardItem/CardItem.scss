@@ -1,4 +1,9 @@
 .cardContainer {
     min-width: 20em;
     margin-top: 2em;
+    max-width: 10em;
+
+    img {
+        object-fit: contain;
+    }
 }
