@@ -59,7 +59,7 @@ const Header = () => {
   }, [cart]);
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{ backgroundColor: "rgb(50, 50, 50)", color: "white" }}>
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           Nike Store
