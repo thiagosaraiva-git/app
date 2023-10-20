@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import Header from '../components/Header/Header'
 
 export const metadata: Metadata = {
-  title: 'Next Store',
+  title: 'Next 13 Nike Store',
   description: 'Created by Thiago Brasil Saraiva',
 }
 

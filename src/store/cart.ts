@@ -1,13 +1,6 @@
 import { atom } from "jotai";
+import { Shoe } from "@/types/shoe";
 
-type State = {
-  name: string;
-  brand: string;
-  price: number;
-  image: string;
-  quantity: number;
-};
-
-const cartAtom = atom<State[]>([]);
+const cartAtom = atom<Shoe[]>([]);
 
 export { cartAtom };

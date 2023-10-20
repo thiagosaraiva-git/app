@@ -1,42 +1,59 @@
-'use client'
+"use client";
 
 import CardItem from "@/components/CardItem/CardItem";
-import Grid from '@mui/material/Grid'
+import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Shoe } from "@/types/shoe";
 
-type Shoe = {
-  _id: string
-  name: string
-  brand: string
-  image: string
-  price: number
-}
+import { CircularProgress } from "@mui/material";
+import "./page.scss";
 
 export default function Home() {
-  const [shoes, setShoes] = useState([])
-  
+  const [shoes, setShoes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   async function getShoes() {
     try {
       // let res = await axios.get('http://localhost:2540/shoes') // local
-      let res = await axios.get('https://backend-shoes-store.onrender.com/shoes') // production
-      setShoes(res.data)
+      let res = await axios.get(
+        "https://backend-shoes-store.onrender.com/shoes"
+      ); // production
+      setShoes(res.data);
+      setLoading(false);
     } catch (error) {
-      console.error('Error: ' + error)
+      console.error("Error: " + error);
     }
   }
 
   useEffect(() => {
-    getShoes()
-  }, [])
+    getShoes();
+  }, []);
 
   return (
-    <>
-      <Grid container spacing={2} alignItems='center' justifyContent='center'>
-        { shoes.length ? shoes.map((shoe: Shoe) => 
-          <CardItem key={shoe._id} name={shoe.name} brand={shoe.brand} image={shoe.image} price={shoe.price} />
-        ) : <Grid item>Loading shoes...</Grid> }
-      </Grid>
-    </>
-  )
+    <Grid container spacing={2} alignItems="center" justifyContent="center">
+      {loading ? (
+        <CircularProgress className="pageLoading" />
+      ) : (
+        <>
+          {shoes.length ? (
+            shoes.map((shoe: Shoe) => (
+              <CardItem
+                key={shoe._id}
+                _id={shoe._id}
+                name={shoe.name}
+                brand={shoe.brand}
+                image={shoe.image}
+                price={shoe.price}
+                stock={shoe.stock}
+                quantity={0}
+              />
+            ))
+          ) : (
+            <Grid item>No shoes found.</Grid>
+          )}
+        </>
+      )}
+    </Grid>
+  );
 }

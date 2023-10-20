@@ -14,14 +14,9 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { useAtom } from "jotai";
 import { cartAtom } from "@/store/cart";
 
-interface CardItemProps {
-  name: string;
-  brand: string;
-  image: string;
-  price: number;
-}
+import { Shoe } from "@/types/shoe";
 
-const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
+const CardItem: React.FC<Shoe> = ({ _id, name, brand, image, price, stock }) => {
   const [cart, setCart] = useAtom(cartAtom);
 
   const handleAdd = () => {
@@ -35,9 +30,11 @@ const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
       setCart([
         ...cart,
         {
+          _id: _id,
           name: name,
           brand: brand,
           price: price,
+          stock: stock,
           image: image,
           quantity: 1,
         },
@@ -47,18 +44,18 @@ const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
 
   const handleRemove = () => {
     const itemIndex = cart.findIndex((item) => item.name === name);
-      if (itemIndex !== -1) {
-        if (cart[itemIndex].quantity > 1) {
-          const updatedCart = [...cart];
-          updatedCart[itemIndex].quantity -= 1;
-          setCart(updatedCart);
-        } else {
-          const updatedCart = [...cart];
-          updatedCart.splice(itemIndex, 1);
-          setCart(updatedCart);
-        }
+    if (itemIndex !== -1 && cart[itemIndex]) {
+      if (cart[itemIndex].quantity > 1) {
+        const updatedCart = [...cart];
+        updatedCart[itemIndex].quantity -= 1;
+        setCart(updatedCart);
+      } else {
+        const updatedCart = [...cart];
+        updatedCart.splice(itemIndex, 1);
+        setCart(updatedCart);
       }
-    };
+    }
+  };
 
   return (
     <Grid item>
@@ -70,6 +67,9 @@ const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Price: ${price}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Stock: {stock}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Quantity: {cart.find((item) => item.name === name)?.quantity || 0}
@@ -90,7 +90,8 @@ const CardItem: React.FC<CardItemProps> = ({ name, brand, image, price }) => {
             >
               <RemoveIcon />
             </IconButton>
-            <IconButton aria-label="add" onClick={handleAdd}>
+            <IconButton aria-label="add" onClick={handleAdd} 
+            disabled={cart.find((item) => item.name === name)?.quantity === stock}>
               <AddIcon />
             </IconButton>
           </Grid>
