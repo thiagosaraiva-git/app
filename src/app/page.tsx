@@ -15,8 +15,6 @@ export default function Home() {
   const [shoes, setShoes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(URI);
-
   async function getShoes() {
     try {
       let res = await axios.get(URI);
