@@ -5,20 +5,21 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Shoe } from "@/types/shoe";
-
 import { CircularProgress } from "@mui/material";
 import "./page.scss";
+
+const URI: any = 
+  process.env.BACKEND_PROD || "http://localhost:2540/shoes"
 
 export default function Home() {
   const [shoes, setShoes] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  console.log(URI);
+
   async function getShoes() {
     try {
-      // let res = await axios.get('http://localhost:2540/shoes') // local
-      let res = await axios.get(
-        "https://backend-shoes-store.onrender.com/shoes"
-      ); // production
+      let res = await axios.get(URI);
       setShoes(res.data);
       setLoading(false);
     } catch (error) {
